@@ -45,7 +45,7 @@ app.post("/register", (req, res)=>{
     res.render("secrets");
 
 });
-app.post("/login" , (req, res)=>{
+app.post("/login" , (req, res) => {
     const username = req.body.username;
     const pswd = md5(req.body.password);
     User.findOne({email: username}).exec()
