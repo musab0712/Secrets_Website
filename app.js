@@ -21,7 +21,6 @@ const secretsSchema = new mongoose.Schema({
     pswd: String
 });
 
-//console.log(process.env.SECRET);
 //secretsSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ["pswd"]});
 
 const User = mongoose.model('User', secretsSchema);
