@@ -5,6 +5,9 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const md5 = require("md5");
 //const encrypt = require("mongoose-encryption");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const app = express();
 
@@ -14,12 +17,23 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+app.use(session({
+    secret: "This is good.",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 mongoose.connect('mongodb://127.0.0.1:27017/SecretsDB');
 
 const secretsSchema = new mongoose.Schema({
     email: String,
     pswd: String
 });
+
+secretsSchema.plugin(passportLocalMongoose);
 
 //secretsSchema.plugin(encrypt, {secret: process.env.SECRET, encryptedFields: ["pswd"]});
 
